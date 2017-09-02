@@ -18,6 +18,8 @@
                     </tr>
                 </tbody>
             </table>
+            <button v-for="(v, k) in versions" @click="version = k">{{v}}</button>
+            <button v-for="(v, k) in endians" @click="endian = k">{{v}}</button>
         </div>
         <script src="vue.js"></script>
         <script src="main.js"></script>
