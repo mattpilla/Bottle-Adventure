@@ -3,10 +3,15 @@
     <head>
         <meta charset="utf-8">
         <title>Bottle Adventure</title>
+        <style>
+            #ba-table, #ba-controls {
+                display: inline-table;
+            }
+        </style>
     </head>
     <body>
         <div id="app">
-            <table>
+            <table id="ba-table">
                 <tbody>
                     <tr>
                         <td></td>
@@ -18,8 +23,17 @@
                     </tr>
                 </tbody>
             </table>
-            <button v-for="(v, k) in versions" @click="version = k">{{v}}</button>
-            <button v-for="(v, k) in endians" @click="endian = k">{{v}}</button>
+            <div id="ba-controls">
+                <button v-for="(v, k) in versions" @click="version = k">{{v}}</button><br>
+                <button v-for="(v, k) in endians" @click="endian = k">{{v}}</button>
+                <table>
+                    <tr v-for="i in 8">
+                        <td v-for="j in 6">
+                            <img :src="`icons/${(i - 1) * 6 + (j - 1)}.png`"></img>
+                        </td>
+                    </tr>
+                </table>
+            </div>
         </div>
         <script src="vue.js"></script>
         <script src="main.js"></script>

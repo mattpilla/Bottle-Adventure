@@ -12,6 +12,7 @@ app = new Vue({
             'L': 'Little Endian'
         },
         version: 'U',
-        endian: 'L'
+        endian: 'L',
+        item: null
     }
 });
