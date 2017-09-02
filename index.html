@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Bottle Adventure</title>
+    </head>
+    <body>
+        <div id="app">
+            <table>
+                <tbody>
+                    <tr>
+                        <td></td>
+                        <td v-for="i in 16">{{(i - 1).toString(16)}}</td>
+                    </tr>
+                    <tr v-for="i in rows">
+                        <td>{{(start + (i - 1) * 16).toString(16)}}</td>
+                        <td v-for="i in 16">ff</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <script src="vue.js"></script>
+        <script src="main.js"></script>
+    </body>
+</html>
