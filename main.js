@@ -39,6 +39,24 @@ ba = new Vue({
                     this.rows[i][j] = 'ff';
                 }
             }
+            if (Number.isInteger(this.item)) {
+                for (var i = 0; i < 8; i++) {
+                    var row = Math.floor(this.item/2);
+                    var col = this.item % 2 * 8;
+                    this.rows[row][col + i] = 'xx';
+                    if (i == 4) {
+                        this.rows[row + 3][col + i] = '70';
+                        this.rows[row + 6][col + i] = '70';
+                    } else if (i == 5) {
+                        this.rows[row + 3][col + i] = '17';
+                        this.rows[row + 6][col + i] = '17';
+                    } else {
+                        this.rows[row + 3][col + i] = '00';
+                        this.rows[row + 6][col + i] = '00';
+                    }
+                    this.rows[row + 9][col + i] = '00';
+                }
+            }
         },
         getIndex(i, j) {
             return (i - 1) * 6 + (j - 1);

@@ -1,0 +1,75 @@
+#ba {
+    background-color: #eaeaea;
+    font-family: monospace;
+}
+#ba-table, #ba-controls {
+    display: inline-table;
+}
+#ba-table {
+    border-collapse: collapse;
+    margin: 5px;
+    cursor: default;
+}
+#ba-table td {
+    border: 1px solid #ccc;
+    background-color: #efefef;
+    padding: 2px 4px;
+    text-transform: uppercase;
+}
+#ba-table td.hit {
+    background-color: #000;
+    border-color: #000;
+    color: #fff;
+}
+#ba-table td.time {
+    color: #0f0;
+}
+#ba-table td.zero {
+    background-color: #666;
+    border-color: #666;
+}
+#ba-table tbody tr:first-child td {
+    background-color: #fff;
+    border-top: none;
+    border-bottom: 1px solid #000;
+}
+#ba-table tbody tr td:first-child {
+    border-left: none;
+    background-color: #fff;
+    border-right: 1px solid #000;
+}
+.ba-button {
+    border: 1px solid #808080;
+    width: 100px;
+    background-color: #efefef;
+    cursor: pointer;
+}
+.ba-button.selected {
+    background-color: #abd5ff;
+}
+#ba-start {
+    margin: 10px 0;
+}
+#ba-start > input {
+    width: 75px;
+    border: 1px solid #808080;
+    border-right: none;
+    text-transform: uppercase;
+    font-family: monospace;
+}
+#ba-start > button {
+    border: 1px solid #808080;
+    background-color: #efefef;
+    cursor: pointer;
+}
+#ba-items td {
+    border: 1px solid transparent;
+    cursor: pointer;
+}
+#ba-items td:hover {
+    border-color: #f00;
+}
+#ba-items td.selected {
+    border-color: #f00;
+    background-color: #abd5ff;
+}
