@@ -62,6 +62,17 @@
                 background-color: #efefef;
                 cursor: pointer;
             }
+            #ba-items td {
+                border: 1px solid transparent;
+                cursor: pointer;
+            }
+            #ba-items td:hover {
+                border-color: #f00;
+            }
+            #ba-items td.selected {
+                border-color: #f00;
+                background-color: #abd5ff;
+            }
         </style>
     </head>
     <body>
@@ -72,9 +83,9 @@
                         <td></td>
                         <td v-for="i in 16">&nbsp;{{(i - 1).toString(16)}}</td>
                     </tr>
-                    <tr v-for="i in rows">
-                        <td>{{(hexStart + (i - 1) * 16).toString(16)}}</td>
-                        <td v-for="i in 16">ff</td>
+                    <tr v-for="(row, i) in rows">
+                        <td>{{(i * 16 + hexStart).toString(16)}}</td>
+                        <td v-for="col in row">{{col}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -84,10 +95,10 @@
                 <div id="ba-start">
                     <span>Start: 0x</span><input v-model="start"><button @click="resetStart">Reset</button>
                 </div>
-                <table>
+                <table id="ba-items">
                     <tr v-for="i in 8">
-                        <td v-for="j in 6">
-                            <img :src="`icons/${(i - 1) * 6 + (j - 1)}.png`"></img>
+                        <td v-for="j in 6" :class="{selected: item === getIndex(i, j)}" @click="setItem(i, j)">
+                            <img :src="`icons/${getIndex(i, j)}.png`"></img>
                         </td>
                     </tr>
                 </table>
