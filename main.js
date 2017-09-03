@@ -1,7 +1,8 @@
 ba = new Vue({
     el: '#ba',
     data: {
-        start: 0xadd090,
+        start: '',
+        hexStart: 0x0,
         rows: 33,
         versions: {
             'U': 'NTSC (U)',
@@ -14,5 +15,18 @@ ba = new Vue({
         version: 'U',
         endian: 'L',
         item: null
+    },
+    mounted() {
+        this.resetStart();
+    },
+    watch: {
+        start() {
+            this.hexStart = parseInt(this.start, 16);
+        }
+    },
+    methods: {
+        resetStart() {
+            this.start = 'add090';
+        }
     }
 });

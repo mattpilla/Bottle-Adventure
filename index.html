@@ -20,6 +20,7 @@
             #ba-table {
                 border-collapse: collapse;
                 margin: 5px;
+                cursor: default;
             }
             #ba-table td {
                 border: 1px solid #ccc;
@@ -40,11 +41,26 @@
             .ba-button {
                 border: 1px solid #808080;
                 width: 100px;
-                background-color: #fff;
+                background-color: #efefef;
                 cursor: pointer;
             }
             .ba-button.selected {
                 background-color: #abd5ff;
+            }
+            #ba-start {
+                margin: 10px 0;
+            }
+            #ba-start > input {
+                width: 75px;
+                border: 1px solid #808080;
+                border-right: none;
+                text-transform: uppercase;
+                font-family: monospace;
+            }
+            #ba-start > button {
+                border: 1px solid #808080;
+                background-color: #efefef;
+                cursor: pointer;
             }
         </style>
     </head>
@@ -57,14 +73,17 @@
                         <td v-for="i in 16">&nbsp;{{(i - 1).toString(16)}}</td>
                     </tr>
                     <tr v-for="i in rows">
-                        <td>{{(start + (i - 1) * 16).toString(16)}}</td>
+                        <td>{{(hexStart + (i - 1) * 16).toString(16)}}</td>
                         <td v-for="i in 16">ff</td>
                     </tr>
                 </tbody>
             </table>
             <div id="ba-controls">
                 <button v-for="(v, k) in versions" class="ba-button" :class="{selected: version === k}" @click="version = k">{{v}}</button><br>
-                <button v-for="(v, k) in endians" class="ba-button" :class="{selected: endian === k}" @click="endian = k">{{v}}</button>
+                <button v-for="(v, k) in endians" class="ba-button" :class="{selected: endian === k}" @click="endian = k">{{v}}</button><br>
+                <div id="ba-start">
+                    <span>Start: 0x</span><input v-model="start"><button @click="resetStart">Reset</button>
+                </div>
                 <table>
                     <tr v-for="i in 8">
                         <td v-for="j in 6">
