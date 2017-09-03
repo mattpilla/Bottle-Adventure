@@ -4,18 +4,57 @@
         <meta charset="utf-8">
         <title>Bottle Adventure</title>
         <style>
+            body {
+                /* temporary; remove these if embedding on a site*/
+                background-color: #000;
+                max-width: 900px;
+                margin: auto;
+            }
+            #ba {
+                background-color: #eaeaea;
+                font-family: monospace;
+            }
             #ba-table, #ba-controls {
                 display: inline-table;
+            }
+            #ba-table {
+                border-collapse: collapse;
+                margin: 5px;
+            }
+            #ba-table td {
+                border: 1px solid #ccc;
+                background-color: #efefef;
+                padding: 2px 4px;
+                text-transform: uppercase;
+            }
+            #ba-table tbody tr:first-child td {
+                background-color: #fff;
+                border-top: none;
+                border-bottom: 1px solid #000;
+            }
+            #ba-table tbody tr td:first-child {
+                border-left: none;
+                background-color: #fff;
+                border-right: 1px solid #000;
+            }
+            .ba-button {
+                border: 1px solid #808080;
+                width: 100px;
+                background-color: #fff;
+                cursor: pointer;
+            }
+            .ba-button.selected {
+                background-color: #abd5ff;
             }
         </style>
     </head>
     <body>
-        <div id="app">
+        <div id="ba">
             <table id="ba-table">
                 <tbody>
                     <tr>
                         <td></td>
-                        <td v-for="i in 16">{{(i - 1).toString(16)}}</td>
+                        <td v-for="i in 16">&nbsp;{{(i - 1).toString(16)}}</td>
                     </tr>
                     <tr v-for="i in rows">
                         <td>{{(start + (i - 1) * 16).toString(16)}}</td>
@@ -24,8 +63,8 @@
                 </tbody>
             </table>
             <div id="ba-controls">
-                <button v-for="(v, k) in versions" @click="version = k">{{v}}</button><br>
-                <button v-for="(v, k) in endians" @click="endian = k">{{v}}</button>
+                <button v-for="(v, k) in versions" class="ba-button" :class="{selected: version === k}" @click="version = k">{{v}}</button><br>
+                <button v-for="(v, k) in endians" class="ba-button" :class="{selected: endian === k}" @click="endian = k">{{v}}</button>
                 <table>
                     <tr v-for="i in 8">
                         <td v-for="j in 6">

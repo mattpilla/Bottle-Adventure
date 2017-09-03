@@ -1,5 +1,5 @@
-app = new Vue({
-    el: '#app',
+ba = new Vue({
+    el: '#ba',
     data: {
         start: 0xadd090,
         rows: 33,
