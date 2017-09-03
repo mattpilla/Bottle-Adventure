@@ -51,7 +51,7 @@
     background-color: #abd5ff;
 }
 #ba-start {
-    margin: 10px 0;
+    margin-top: 10px;
 }
 #ba-start > input {
     width: 75px;
@@ -64,6 +64,12 @@
     border: 1px solid #808080;
     background-color: #efefef;
     cursor: pointer;
+}
+#timestamp {
+    margin: 5px 0 10px 0;
+}
+#timestamp > span {
+    text-transform: uppercase;
 }
 #ba-items td {
     border: 1px solid transparent;

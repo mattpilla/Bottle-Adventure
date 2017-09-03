@@ -22,7 +22,7 @@
                     </tr>
                     <tr v-for="(row, i) in rows">
                         <td>{{(i * 16 + hexStart).toString(16)}}</td>
-                        <td v-for="col in row" :class="{hit: col !== 'ff', lone: col === '01', time: col === 'xx', zero: col === '00'}">{{col}}</td>
+                        <td v-for="col in row" :class="{hit: col !== 'ff', lone: col === '01', time: col.endsWith('x'), zero: col === '00'}">{{col.substr(0,2)}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -32,6 +32,7 @@
                 <div id="ba-start">
                     <span>Start: 0x</span><input v-model="start"><button @click="resetStart">Reset</button>
                 </div>
+                <div id="timestamp">Timestamp: 0x<span>{{timestamp.join('')}}</span></div>
                 <table id="ba-items">
                     <tr v-for="i in 8">
                         <td v-for="j in 6" :class="{selected: item === getIndex(i, j)}" @click="setItem(i, j)">

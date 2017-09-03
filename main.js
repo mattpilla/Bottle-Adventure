@@ -1,8 +1,9 @@
-ba = new Vue({
+var ba = new Vue({
     el: '#ba',
     data: {
         start: '',
         hexStart: 0x0,
+        timestamp: ['01', '23', '45', '67', '89', 'ab', 'cd', 'ef'],
         rows: [],
         versions: {
             'U': 'NTSC (U)',
@@ -28,12 +29,17 @@ ba = new Vue({
             this.getRows();
         },
         endian() {
+            this.resetStart();
             this.getRows();
         }
     },
     methods: {
         resetStart() {
-            this.start = 'add090';
+            if (this.endian === 'B') {
+                this.start = '1f0600';
+            } else {
+                this.start = 'add090';
+            }
         },
         getRows() {
             for (var i = 0; i < 33; i++) {
@@ -46,9 +52,10 @@ ba = new Vue({
                 var lone = (Math.floor(this.item/4) + 1) * 4 + 119 - this.item % 4;
                 this.rows[Math.floor(lone/16)][lone % 16] = '01';
                 for (var i = 0; i < 8; i++) {
+                    var timeByte = (Math.floor(i/4) + 1) * 4 - i % 4 - 1;
                     var row = Math.floor(this.item/2);
                     var col = this.item % 2 * 8;
-                    this.rows[row][col + i] = 'xx';
+                    this.rows[row][col + i] = this.timestamp[timeByte] + 'x';
                     if (i == 4) {
                         this.rows[row + 3][col + i] = '70';
                         this.rows[row + 6][col + i] = '70';
