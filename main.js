@@ -26,6 +26,9 @@ ba = new Vue({
         },
         item() {
             this.getRows();
+        },
+        endian() {
+            this.getRows();
         }
     },
     methods: {
@@ -39,7 +42,9 @@ ba = new Vue({
                     this.rows[i][j] = 'ff';
                 }
             }
-            if (Number.isInteger(this.item)) {
+            if (Number.isInteger(this.item) && this.endian === 'L') {
+                var lone = (Math.floor(this.item/4) + 1) * 4 + 119 - this.item % 4;
+                this.rows[Math.floor(lone/16)][lone % 16] = '01';
                 for (var i = 0; i < 8; i++) {
                     var row = Math.floor(this.item/2);
                     var col = this.item % 2 * 8;

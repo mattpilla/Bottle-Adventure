@@ -22,7 +22,7 @@
                     </tr>
                     <tr v-for="(row, i) in rows">
                         <td>{{(i * 16 + hexStart).toString(16)}}</td>
-                        <td v-for="col in row" :class="{hit: col !== 'ff', time: col === 'xx', zero: col === '00'}">{{col}}</td>
+                        <td v-for="col in row" :class="{hit: col !== 'ff', lone: col === '01', time: col === 'xx', zero: col === '00'}">{{col}}</td>
                     </tr>
                 </tbody>
             </table>
