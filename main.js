@@ -14,7 +14,7 @@ var ba = new Vue({
             'L': 'Little Endian'
         },
         version: 'U',
-        endian: 'L',
+        endian: 'B',
         item: null,
         itemNames: ['Ocarina of Time', 'Hero\'s Bow', 'Fire Arrow', 'Ice Arrow', 'Light Arrow', 'Trade Item 1', 'Bomb', 'Bombchu', 'Deku Stick', 'Deku Nut', 'Magic Beans', 'Trade Item 2', 'Powder Keg', 'Pictograph Box', 'Lens of Truth', 'Hookshot', 'Great Fairy\'s Sword', 'Trade Item 3', 'Bottle 1', 'Bottle 2', 'Bottle 3', 'Bottle 4', 'Bottle 5', 'Bottle 6', 'Postman\'s Hat', 'All-Night Mask', 'Blast Mask', 'Stone Mask', 'Great Fairy\'s Mask', 'Deku Mask', 'Keaton Mask', 'Bremen Mask', 'Bunny Hood', 'Don Gero\'s Mask', 'Mask of Scents', 'Goron Mask', 'Romani\'s Mask', 'Circus Leader\'s Mask', 'Kafei\'s Mask', 'Couple\'s Mask', 'Mask of Truth', 'Zora Mask', 'Kamaro\'s Mask', 'Gibdo Mask', 'Garo\'s Mask', 'Captain\'s Hat', 'Giant\'s Mask', 'Fierce Deity\'s Mask']
     },
@@ -67,7 +67,25 @@ var ba = new Vue({
                     }
                 }
             }
-            if (Number.isInteger(this.item) && this.endian === 'L') {
+            if (Number.isInteger(this.item) && this.endian === 'B') {
+                var item = this.item;
+                var lone = 120 + item;
+                this.rows[Math.floor(lone/16)][lone % 16] = '01';
+                for (var i = 0; i < 8; i++) {
+                    var row = Math.floor(item/2);
+                    var col = item % 2 * 8;
+                    this.rows[row][col + i] = this.timestamp[i] + 'x';
+                    var timerByte = '00';
+                    if (i == 6) {
+                        timerByte = '17';
+                    } else if (i == 7) {
+                        timerByte = '70';
+                    }
+                    this.rows[row + 3][col + i] = timerByte;
+                    this.rows[row + 6][col + i] = timerByte;
+                    this.rows[row + 9][col + i] = '00';
+                }
+            } else if (Number.isInteger(this.item) && this.endian === 'L') {
                 var item = this.item;
                 if (this.version === 'J') {
                     item += 2;
@@ -82,16 +100,14 @@ var ba = new Vue({
                     var row = Math.floor(item/2);
                     var col = item % 2 * 8;
                     this.rows[row][col + i] = this.timestamp[timeByte] + 'x';
+                    var timerByte = '00';
                     if (i == 4) {
-                        this.rows[row + 3][col + i] = '70';
-                        this.rows[row + 6][col + i] = '70';
+                        timerByte = '70';
                     } else if (i == 5) {
-                        this.rows[row + 3][col + i] = '17';
-                        this.rows[row + 6][col + i] = '17';
-                    } else {
-                        this.rows[row + 3][col + i] = '00';
-                        this.rows[row + 6][col + i] = '00';
+                        timerByte = '17';
                     }
+                    this.rows[row + 3][col + i] = timerByte;
+                    this.rows[row + 6][col + i] = timerByte;
                     this.rows[row + 9][col + i] = '00';
                 }
             }
