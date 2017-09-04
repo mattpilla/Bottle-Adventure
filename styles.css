@@ -28,8 +28,12 @@
     color: #0f0;
 }
 #ba-table td.zero {
-    background-color: #666;
-    border-color: #666;
+    color: #ccc;
+}
+#ba-table td.unreachable {
+    background-color: #ddd;
+    border-color: #bbb;
+    color: #999;
 }
 #ba-table tbody tr:first-child td {
     background-color: #fff;

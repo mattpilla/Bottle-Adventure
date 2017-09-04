@@ -29,6 +29,10 @@ var ba = new Vue({
         item() {
             this.getRows();
         },
+        version() {
+            this.resetStart();
+            this.getRows();
+        },
         endian() {
             this.resetStart();
             this.getRows();
@@ -36,26 +40,47 @@ var ba = new Vue({
     },
     methods: {
         resetStart() {
-            if (this.endian === 'B') {
-                this.start = '1f0600';
-            } else {
-                this.start = 'add090';
+            var x = this.version + this.endian;
+            switch (x) {
+                case 'JB':
+                    this.start = '1f35a0';
+                    break;
+                case 'JL':
+                    this.start = 'ae0030';
+                    break;
+                case 'UB':
+                    this.start = '1f0600';
+                    break;
+                case 'UL':
+                    this.start = 'add090';
+                    break;
             }
         },
         getRows() {
-            for (var i = 0; i < 33; i++) {
+            for (var i = 0; i < 34; i++) {
                 this.rows[i] = [];
                 for (var j = 0; j < 16; j++) {
-                    this.rows[i][j] = 'ff';
+                    if (i === 33 && (this.version === 'U' || j > 7)) {
+                        this.rows[i][j]  = '--';
+                    } else {
+                        this.rows[i][j] = 'ff';
+                    }
                 }
             }
             if (Number.isInteger(this.item) && this.endian === 'L') {
-                var lone = (Math.floor(this.item/4) + 1) * 4 + 119 - this.item % 4;
+                var item = this.item;
+                if (this.version === 'J') {
+                    item += 2;
+                }
+                var lone = (Math.floor(item/4) + 1) * 4 + 119 - item % 4;
                 this.rows[Math.floor(lone/16)][lone % 16] = '01';
+                if (this.version === 'J') {
+                    item -= 1;
+                }
                 for (var i = 0; i < 8; i++) {
                     var timeByte = (Math.floor(i/4) + 1) * 4 - i % 4 - 1;
-                    var row = Math.floor(this.item/2);
-                    var col = this.item % 2 * 8;
+                    var row = Math.floor(item/2);
+                    var col = item % 2 * 8;
                     this.rows[row][col + i] = this.timestamp[timeByte] + 'x';
                     if (i == 4) {
                         this.rows[row + 3][col + i] = '70';
