@@ -69,44 +69,32 @@ var ba = new Vue({
                     }
                 }
             }
-            if (Number.isInteger(this.item) && this.endian === 'B') {
-                var item = this.item;
-                var lone = 120 + item;
-                this.rows[Math.floor(lone/16)][lone % 16] = '01';
-                for (var i = 0; i < 8; i++) {
-                    var row = Math.floor(item/2);
-                    var col = item % 2 * 8;
-                    this.rows[row][col + i] = this.timestamp[i] + 'x';
-                    var timerByte = '00';
-                    if (i == 6) {
-                        timerByte = '17';
-                    } else if (i == 7) {
-                        timerByte = '70';
-                    }
-                    this.rows[row + 3][col + i] = timerByte;
-                    this.rows[row + 6][col + i] = timerByte;
-                    this.rows[row + 9][col + i] = '00';
-                }
-            } else if (Number.isInteger(this.item) && this.endian === 'L') {
+            if (Number.isInteger(this.item)) {
                 var item = this.item;
                 if (this.version === 'J') {
                     item += 2;
                 }
-                var lone = (Math.floor(item/4) + 1) * 4 + 119 - item % 4;
+                var lone = 120 + item;
+                if (this.endian === 'L') {
+                    lone = (Math.floor(item/4) + 1) * 4 + 119 - item % 4;
+                }
                 this.rows[Math.floor(lone/16)][lone % 16] = '01';
                 if (this.version === 'J') {
                     item -= 1;
                 }
                 for (var i = 0; i < 8; i++) {
-                    var timeByte = (Math.floor(i/4) + 1) * 4 - i % 4 - 1;
+                    var timestampByte = i;
+                    if (this.endian === 'L') {
+                        timestampByte = (Math.floor(i/4) + 1) * 4 - i % 4 - 1;
+                    }
                     var row = Math.floor(item/2);
                     var col = item % 2 * 8;
-                    this.rows[row][col + i] = this.timestamp[timeByte] + 'x';
+                    this.rows[row][col + i] = this.timestamp[timestampByte] + 'x';
                     var timerByte = '00';
-                    if (i == 4) {
-                        timerByte = '70';
-                    } else if (i == 5) {
+                    if ((this.endian === 'B' && i === 6) || (this.endian === 'L' && i === 5)) {
                         timerByte = '17';
+                    } else if ((this.endian === 'B' && i === 7) || (this.endian === 'L' && i === 4)) {
+                        timerByte = '70';
                     }
                     this.rows[row + 3][col + i] = timerByte;
                     this.rows[row + 6][col + i] = timerByte;
