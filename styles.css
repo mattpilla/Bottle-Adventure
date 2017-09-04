@@ -40,10 +40,14 @@
     border-top: none;
     border-bottom: 1px solid #000;
 }
-#ba-table tbody tr td:first-child {
+#ba-table tbody tr td:first-child:not(.separator) {
     border-left: none;
     background-color: #fff;
     border-right: 1px solid #000;
+}
+#ba-table .separator {
+    padding: 3px;
+    border: none;
 }
 .ba-button {
     border: 1px solid #808080;

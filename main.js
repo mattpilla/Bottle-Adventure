@@ -5,6 +5,7 @@ var ba = new Vue({
         hexStart: 0x0,
         timestamp: ['01', '23', '45', '67', '89', 'ab', 'cd', 'ef'],
         rows: [],
+        extraRows: [],
         versions: {
             'U': 'NTSC (U)',
             'J': 'NTSC (J)'
@@ -99,6 +100,17 @@ var ba = new Vue({
                     this.rows[row + 3][col + i] = timerByte;
                     this.rows[row + 6][col + i] = timerByte;
                     this.rows[row + 9][col + i] = '00';
+                }
+            }
+            // lone byte empty C: 0x1f3719
+            for (var i = 0; i < 10; i++) {
+                this.extraRows[i] = [];
+                for (var j = 0; j < 16; j++) {
+                    if (this.version === 'J' && i % 3 === 0 && j < 8) {
+                        this.extraRows[i][j] = 'ff';
+                    } else {
+                        this.extraRows[i][j] = '--';
+                    }
                 }
             }
         },
