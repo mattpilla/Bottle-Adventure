@@ -60,7 +60,9 @@ var ba = new Vue({
             for (var i = 0; i < 34; i++) {
                 this.rows[i] = [];
                 for (var j = 0; j < 16; j++) {
-                    if (i === 33 && (this.version === 'U' || j > 7)) {
+                    if (i === 0 && j < 8 && this.version === 'J') {
+                        this.rows[i][j] = '--';
+                    } else if (i === 33 && (this.version === 'U' || j > 7)) {
                         this.rows[i][j]  = '--';
                     } else {
                         this.rows[i][j] = 'ff';

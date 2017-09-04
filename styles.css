@@ -52,7 +52,7 @@
     cursor: pointer;
 }
 .ba-button.selected {
-    background-color: #abd5ff;
+    background-color: #9df;
 }
 #ba-start {
     margin-top: 10px;
@@ -80,9 +80,9 @@
     cursor: pointer;
 }
 #ba-items td:hover {
-    border-color: #f00;
+    border-color: #00f;
 }
 #ba-items td.selected {
-    border-color: #f00;
-    background-color: #abd5ff;
+    border-color: #00f;
+    background-color: #9df;
 }
