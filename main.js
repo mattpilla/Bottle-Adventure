@@ -119,6 +119,9 @@ var ba = new Vue({
                     }
                 }
             }
+            if (this.item === 'empty') {
+                //
+            }
         },
         getIndex(i, j) {
             return (i - 1) * 6 + (j - 1);

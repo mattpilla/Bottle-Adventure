@@ -46,9 +46,14 @@
                             <img :src="`icons/${getIndex(i, j)}.png`"></img>
                         </td>
                     </tr>
+                    <tr>
+                        <td :class="{selected: item === 'empty'}" @click="item = (item === 'empty' ? null : 'empty')">
+                            <img src="icons/empty.png"></img>
+                        </td>
+                    </tr>
                 </table>
                 <div id="ba-info">
-                    <span>{{itemNames[item]}}</span>
+                    <span>{{item === 'empty' ? 'Empty C/Transformation B' : itemNames[item]}}</span>
                 </div>
             </div>
         </div>
