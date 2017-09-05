@@ -28,7 +28,7 @@
                         <td colspan="17" class="separator"></td>
                     </tr>
                     <tr v-for="(row, i) in extraRows">
-                        <td>{{(i * 16 + hexStart + 2048).toString(16)}}</td>
+                        <td>{{(i * 16 + hexStart + 2032).toString(16)}}</td>
                         <td v-for="col in row" :class="{hit: col !== 'ff' && col !== '--', lone: col === '01', time: col.endsWith('x'), zero: col === '00', unreachable: col === '--'}">{{col.substr(0,2)}}</td>
                     </tr>
                 </tbody>

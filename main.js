@@ -102,11 +102,17 @@ var ba = new Vue({
                     this.rows[row + 9][col + i] = '00';
                 }
             }
-            // lone byte empty C: 0x1f3719
-            for (var i = 0; i < 10; i++) {
+            // lone byte empty C
+            // JB: 0x1f3719
+            // JL: 0xae01aa
+            // UB: 0x1f0777
+            // UL: 0xadd204
+            for (var i = 0; i < 11; i++) {
                 this.extraRows[i] = [];
                 for (var j = 0; j < 16; j++) {
-                    if (this.version === 'J' && i % 3 === 0 && j < 8) {
+                    if (this.version === 'U' && i % 3 === 0 && j > 7) {
+                        this.extraRows[i][j] = 'ff';
+                    } else if (this.version === 'J' && i % 3 === 1 && j < 8) {
                         this.extraRows[i][j] = 'ff';
                     } else {
                         this.extraRows[i][j] = '--';
