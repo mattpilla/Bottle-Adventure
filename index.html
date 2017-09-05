@@ -22,14 +22,14 @@
                     </tr>
                     <tr v-for="(row, i) in rows">
                         <td>{{(i * 16 + hexStart).toString(16)}}</td>
-                        <td v-for="col in row" :class="{hit: col !== 'ff' && col !== '--', lone: col === '01', time: col.endsWith('x'), zero: col === '00', unreachable: col === '--'}">{{col.substr(0,2)}}</td>
+                        <td v-for="col in row" :class="{hit: col !== 'ff' && col !== '--', lone: col === '01', time: col.endsWith('x'), zero: col === '00', unreachable: col === '--', byte: col !== '--'}">{{col.substr(0,2)}}</td>
                     </tr>
                     <tr>
                         <td colspan="17" class="separator"></td>
                     </tr>
                     <tr v-for="(row, i) in extraRows">
                         <td>{{(i * 16 + hexStart + 2032).toString(16)}}</td>
-                        <td v-for="col in row" :class="{hit: col !== 'ff' && col !== '--', lone: col === '01', time: col.endsWith('x'), zero: col === '00', unreachable: col === '--'}">{{col.substr(0,2)}}</td>
+                        <td v-for="col in row" :class="{hit: col !== 'ff' && col !== '--', lone: col === '01', time: col.endsWith('x'), zero: col === '00', unreachable: col === '--', byte: col !== '--'}">{{col.substr(0,2)}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -50,10 +50,11 @@
                         <td :class="{selected: item === 'empty'}" @click="item = (item === 'empty' ? null : 'empty')">
                             <img src="icons/empty.png"></img>
                         </td>
+                        <td colspan="5" class="item-name">{{item === 'empty' ? 'Empty C/Transformation B' : itemNames[item]}}</td>
                     </tr>
                 </table>
                 <div id="ba-info">
-                    <span>{{item === 'empty' ? 'Empty C/Transformation B' : itemNames[item]}}</span>
+                    <span>{{byte}}</span>
                 </div>
             </div>
         </div>

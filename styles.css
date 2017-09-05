@@ -30,6 +30,14 @@
 #ba-table td.zero {
     color: #ccc;
 }
+#ba-table td.byte {
+    cursor: pointer;
+}
+#ba-table td.byte:hover {
+    background-color: #fcc;
+    border-color: #fcc;
+    color: #000;
+}
 #ba-table td.unreachable {
     background-color: #ddd;
     border-color: #bbb;
@@ -79,14 +87,23 @@
 #timestamp > span {
     text-transform: uppercase;
 }
-#ba-items td {
+#ba-items td:not(.item-name) {
     border: 1px solid transparent;
     cursor: pointer;
+    width: 34px;
 }
-#ba-items td:hover {
+#ba-items td.item-name {
+    width: 34px;
+    text-align: right;
+    vertical-align: bottom;
+}
+#ba-items td:not(.item-name):hover {
     border-color: #00f;
 }
 #ba-items td.selected {
     border-color: #00f;
     background-color: #9df;
+}
+#ba-info {
+    margin-top: 10px;
 }
