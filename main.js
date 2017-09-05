@@ -72,16 +72,9 @@ var ba = new Vue({
             }
             if (Number.isInteger(this.item)) {
                 var item = this.item;
+                this.setLoneByte(item);
                 if (this.version === 'J') {
-                    item += 2;
-                }
-                var lone = 120 + item;
-                if (this.endian === 'L') {
-                    lone = (Math.floor(item/4) + 1) * 4 + 119 - item % 4;
-                }
-                this.rows[Math.floor(lone/16)][lone % 16] = '01';
-                if (this.version === 'J') {
-                    item -= 1;
+                    item += 1;
                 }
                 for (var i = 0; i < 8; i++) {
                     var timestampByte = i;
@@ -102,11 +95,6 @@ var ba = new Vue({
                     this.rows[row + 9][col + i] = '00';
                 }
             }
-            // lone byte empty C
-            // JB: 0x1f3719
-            // JL: 0xae01aa
-            // UB: 0x1f0777
-            // UL: 0xadd204
             for (var i = 0; i < 11; i++) {
                 this.extraRows[i] = [];
                 for (var j = 0; j < 16; j++) {
@@ -120,7 +108,29 @@ var ba = new Vue({
                 }
             }
             if (this.item === 'empty') {
-                //
+                this.setLoneByte(255);
+                for (var i = 0; i < 8; i++) {
+                    var timestampByte = i;
+                    if (this.endian === 'L') {
+                        timestampByte = (Math.floor(i/4) + 1) * 4 - i % 4 - 1;
+                    }
+                    var row = 0;
+                    var col = 8;
+                    if (this.version === 'J') {
+                        row = 1;
+                        col = 0;
+                    }
+                    this.extraRows[row][col + i] = this.timestamp[timestampByte] + 'x';
+                    var timerByte = '00';
+                    if ((this.endian === 'B' && i === 6) || (this.endian === 'L' && i === 5)) {
+                        timerByte = '17';
+                    } else if ((this.endian === 'B' && i === 7) || (this.endian === 'L' && i === 4)) {
+                        timerByte = '70';
+                    }
+                    this.extraRows[row + 3][col + i] = timerByte;
+                    this.extraRows[row + 6][col + i] = timerByte;
+                    this.extraRows[row + 9][col + i] = '00';
+                }
             }
         },
         getIndex(i, j) {
@@ -133,6 +143,16 @@ var ba = new Vue({
             } else {
                 this.item = index;
             }
+        },
+        setLoneByte(itemNo) {
+            if (this.version === 'J') {
+                itemNo += 2;
+            }
+            var lone = 120 + itemNo;
+            if (this.endian === 'L') {
+                lone = (Math.floor(itemNo/4) + 1) * 4 + 119 - itemNo % 4;
+            }
+            this.rows[Math.floor(lone/16)][lone % 16] = '01';
         }
     }
 });
