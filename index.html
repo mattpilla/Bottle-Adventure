@@ -22,14 +22,14 @@
                     </tr>
                     <tr v-for="(row, i) in rows">
                         <td>{{(i * 16 + hexStart).toString(16)}}</td>
-                        <td v-for="col in row" :class="{hit: col !== 'ff' && col !== '--', lone: col === '01', time: col.endsWith('x'), zero: col === '00', unreachable: col === '--', byte: col !== '--'}">{{col.substr(0,2)}}</td>
+                        <td v-for="(col, j) in row" :class="{hit: col !== 'ff' && col !== '--', lone: col === '01', time: col.endsWith('x'), zero: col === '00', unreachable: col === '--', byte: col !== '--', selected: i === cell.i && j === cell.j}" @click="setByte(i, j)">{{col.substr(0,2)}}</td>
                     </tr>
                     <tr>
                         <td colspan="17" class="separator"></td>
                     </tr>
                     <tr v-for="(row, i) in extraRows">
                         <td>{{(i * 16 + hexStart + 2032).toString(16)}}</td>
-                        <td v-for="col in row" :class="{hit: col !== 'ff' && col !== '--', lone: col === '01', time: col.endsWith('x'), zero: col === '00', unreachable: col === '--', byte: col !== '--'}">{{col.substr(0,2)}}</td>
+                        <td v-for="(col, j) in row" :class="{hit: col !== 'ff' && col !== '--', lone: col === '01', time: col.endsWith('x'), zero: col === '00', unreachable: col === '--', byte: col !== '--'}" @click="setByte(i, j, true)">{{col.substr(0,2)}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -54,7 +54,7 @@
                     </tr>
                 </table>
                 <div id="ba-info">
-                    <span>{{byte}}</span>
+                    <span>{{address}}</span>
                 </div>
             </div>
         </div>

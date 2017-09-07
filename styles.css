@@ -33,6 +33,11 @@
 #ba-table td.byte {
     cursor: pointer;
 }
+#ba-table td.selected {
+    background-color: #f00 !important;
+    border-color: #f00 !important;
+    color: #fff !important;
+}
 #ba-table td.byte:hover {
     background-color: #fcc;
     border-color: #fcc;

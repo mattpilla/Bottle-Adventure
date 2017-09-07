@@ -18,6 +18,8 @@ var ba = new Vue({
         endian: 'B',
         item: null,
         byte: null,
+        cell: {i: null, j: null},
+        address: '',
         itemNames: ['Ocarina of Time', 'Hero\'s Bow', 'Fire Arrow', 'Ice Arrow', 'Light Arrow', 'Trade Item 1', 'Bomb', 'Bombchu', 'Deku Stick', 'Deku Nut', 'Magic Beans', 'Trade Item 2', 'Powder Keg', 'Pictograph Box', 'Lens of Truth', 'Hookshot', 'Great Fairy\'s Sword', 'Trade Item 3', 'Bottle 1', 'Bottle 2', 'Bottle 3', 'Bottle 4', 'Bottle 5', 'Bottle 6', 'Postman\'s Hat', 'All-Night Mask', 'Blast Mask', 'Stone Mask', 'Great Fairy\'s Mask', 'Deku Mask', 'Keaton Mask', 'Bremen Mask', 'Bunny Hood', 'Don Gero\'s Mask', 'Mask of Scents', 'Goron Mask', 'Romani\'s Mask', 'Circus Leader\'s Mask', 'Kafei\'s Mask', 'Couple\'s Mask', 'Mask of Truth', 'Zora Mask', 'Kamaro\'s Mask', 'Gibdo Mask', 'Garo\'s Mask', 'Captain\'s Hat', 'Giant\'s Mask', 'Fierce Deity\'s Mask']
     },
     mounted() {
@@ -154,6 +156,25 @@ var ba = new Vue({
                 lone = (Math.floor(itemNo/4) + 1) * 4 + 119 - itemNo % 4;
             }
             this.rows[Math.floor(lone/16)][lone % 16] = '01';
+        },
+        setByte(i, j, extra) {
+            if (extra) {
+                //
+            } else if (this.rows[i][j] !== '--') {
+                if (i === this.cell.i && j === this.cell.j) {
+                    this.cell = {i: null, j: null};
+                    this.byte = null;
+                    this.address = '';
+                } else {
+                    this.cell = {i: i, j: j};
+                    let byte = i * 16 + j;
+                    this.address = `0x${(this.hexStart + byte).toString(16)}`;
+                    if (this.version === 'J') {
+                        byte -= 8;
+                    }
+                    this.byte = byte;
+                }
+            }
         }
     }
 });
