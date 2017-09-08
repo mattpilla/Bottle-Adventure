@@ -166,9 +166,12 @@ var ba = new Vue({
                 //
             } else if (this.rows[i][j] !== '--') {
                 var byte = i * 16 + j;
-                var address = `0x${(this.hexStart + byte).toString(16)}`;
+                var address = `0x${(this.hexStart + byte).toString(16).toUpperCase()}`;
                 if (this.version === 'J') {
                     byte -= 8;
+                }
+                if (this.endian === 'L') {
+                    byte = 4 * Math.floor(byte/4) + 3 - (byte % 4);
                 }
                 if (byte === this.byte && address === this.address) {
                     this.cell = {i: null, j: null};
