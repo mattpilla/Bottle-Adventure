@@ -29,6 +29,7 @@ var ba = new Vue({
     watch: {
         start() {
             this.hexStart = parseInt(this.start, 16);
+            this.setByte(this.cell.i, this.cell.j);
         },
         item() {
             this.getRows();
@@ -158,22 +159,30 @@ var ba = new Vue({
             this.rows[Math.floor(lone/16)][lone % 16] = '01';
         },
         setByte(i, j, extra) {
+            if (i === null || j === null) {
+                return;
+            }
             if (extra) {
                 //
             } else if (this.rows[i][j] !== '--') {
-                if (i === this.cell.i && j === this.cell.j) {
+                var byte = i * 16 + j;
+                var address = `0x${(this.hexStart + byte).toString(16)}`;
+                if (this.version === 'J') {
+                    byte -= 8;
+                }
+                if (byte === this.byte && address === this.address) {
                     this.cell = {i: null, j: null};
                     this.byte = null;
                     this.address = '';
                 } else {
                     this.cell = {i: i, j: j};
-                    let byte = i * 16 + j;
-                    this.address = `0x${(this.hexStart + byte).toString(16)}`;
-                    if (this.version === 'J') {
-                        byte -= 8;
-                    }
+                    this.address = address;
                     this.byte = byte;
                 }
+            } else if (this.cell.i === i && this.cell.j === j) {
+                this.cell = {i: null, j: null};
+                this.byte = null;
+                this.address = '';
             }
         }
     }
