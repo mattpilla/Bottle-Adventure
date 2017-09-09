@@ -1,6 +1,7 @@
 #ba {
     background-color: #eaeaea;
     font-family: monospace;
+    display: none;
 }
 #ba-table, #ba-controls {
     display: inline-table;
