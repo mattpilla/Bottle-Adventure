@@ -163,9 +163,9 @@ var ba = new Vue({
             if (i === null || j === null) {
                 return;
             }
-            this.extra = extra;
             if (extra) {
                 if (this.extraRows[i][j] !== '--') {
+                    this.extra = true;
                     var address = `0x${(this.hexStart + i * 16 + j + 2032).toString(16).toUpperCase()}`
                     var byte = i/3 * 8 + j + 520;
                     if (this.version === 'J') {
@@ -183,12 +183,13 @@ var ba = new Vue({
                         this.address = address;
                         this.byte = byte;
                     }
-                } else {
+                } else if (this.cell.i === i && this.cell.j === j) {
                     this.cell = {i: null, j: null};
                     this.byte = null;
                     this.address = '';
                 }
             } else if (this.rows[i][j] !== '--') {
+                this.extra = false;
                 var byte = i * 16 + j;
                 var address = `0x${(this.hexStart + byte).toString(16).toUpperCase()}`;
                 if (this.version === 'J') {
