@@ -163,7 +163,16 @@ var ba = new Vue({
                 return;
             }
             if (extra) {
-                //
+                if (this.extraRows[i][j] !== '--') {
+                    var byte = i/3 * 8 + j + 520;
+                    if (this.version === 'J') {
+                        byte = (i - 1)/3 * 8 + j + 528;
+                    }
+                    if (this.endian === 'L') {
+                        byte = this.toLittleEndian(byte);
+                    }
+                    this.byte = byte;
+                }
             } else if (this.rows[i][j] !== '--') {
                 var byte = i * 16 + j;
                 var address = `0x${(this.hexStart + byte).toString(16).toUpperCase()}`;
@@ -171,7 +180,7 @@ var ba = new Vue({
                     byte -= 8;
                 }
                 if (this.endian === 'L') {
-                    byte = 4 * Math.floor(byte/4) + 3 - (byte % 4);
+                    byte = this.toLittleEndian(byte);
                 }
                 if (byte === this.byte && address === this.address) {
                     this.cell = {i: null, j: null};
@@ -187,6 +196,9 @@ var ba = new Vue({
                 this.byte = null;
                 this.address = '';
             }
+        },
+        toLittleEndian(byte) {
+            return 4 * Math.floor(byte/4) + 3 - (byte % 4);
         }
     }
 });
