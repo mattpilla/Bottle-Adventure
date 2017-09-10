@@ -62,14 +62,21 @@
     padding: 3px;
     border: none;
 }
+#ba-controls > div .ba-button:last-child {
+    margin-left: -1px;
+}
+#ba-controls > .bottom-row {
+    margin-top: -1px;
+}
 .ba-button {
-    border: 1px solid #808080;
+    border: 1px solid #ccc;
     width: 100px;
     background-color: #efefef;
     cursor: pointer;
 }
 .ba-button.selected {
     background-color: #9df;
+    border-color: #939b9e;
 }
 #ba-start {
     margin-top: 10px;

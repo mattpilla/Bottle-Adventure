@@ -37,8 +37,12 @@
                 </tbody>
             </table>
             <div id="ba-controls">
-                <button v-for="(v, k) in versions" class="ba-button" :class="{selected: version === k}" @click="version = k">{{v}}</button><br>
-                <button v-for="(v, k) in endians" class="ba-button" :class="{selected: endian === k}" @click="endian = k">{{v}}</button><br>
+                <div>
+                    <button v-for="(v, k) in versions" class="ba-button" :class="{selected: version === k}" @click="version = k">{{v}}</button>
+                </div>
+                <div class="bottom-row">
+                    <button v-for="(v, k) in endians" class="ba-button" :class="{selected: endian === k}" @click="endian = k">{{v}}</button>
+                </div>
                 <div id="ba-start">
                     <span>Start: 0x</span><input v-model="start"><button @click="resetStart">Reset</button>
                 </div>
