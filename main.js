@@ -164,6 +164,7 @@ var ba = new Vue({
             }
             if (extra) {
                 if (this.extraRows[i][j] !== '--') {
+                    this.address = `0x${(this.hexStart + i * 16 + j + 2032).toString(16).toUpperCase()}`
                     var byte = i/3 * 8 + j + 520;
                     if (this.version === 'J') {
                         byte = (i - 1)/3 * 8 + j + 528;
