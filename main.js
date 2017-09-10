@@ -20,6 +20,7 @@ var ba = new Vue({
         byte: null,
         cell: {i: null, j: null},
         address: '',
+        extra: false,
         itemNames: ['Ocarina of Time', 'Hero\'s Bow', 'Fire Arrow', 'Ice Arrow', 'Light Arrow', 'Trade Item 1', 'Bomb', 'Bombchu', 'Deku Stick', 'Deku Nut', 'Magic Beans', 'Trade Item 2', 'Powder Keg', 'Pictograph Box', 'Lens of Truth', 'Hookshot', 'Great Fairy\'s Sword', 'Trade Item 3', 'Bottle 1', 'Bottle 2', 'Bottle 3', 'Bottle 4', 'Bottle 5', 'Bottle 6', 'Postman\'s Hat', 'All-Night Mask', 'Blast Mask', 'Stone Mask', 'Great Fairy\'s Mask', 'Deku Mask', 'Keaton Mask', 'Bremen Mask', 'Bunny Hood', 'Don Gero\'s Mask', 'Mask of Scents', 'Goron Mask', 'Romani\'s Mask', 'Circus Leader\'s Mask', 'Kafei\'s Mask', 'Couple\'s Mask', 'Mask of Truth', 'Zora Mask', 'Kamaro\'s Mask', 'Gibdo Mask', 'Garo\'s Mask', 'Captain\'s Hat', 'Giant\'s Mask', 'Fierce Deity\'s Mask']
     },
     mounted() {
@@ -29,7 +30,7 @@ var ba = new Vue({
     watch: {
         start() {
             this.hexStart = parseInt(this.start, 16);
-            this.setByte(this.cell.i, this.cell.j);
+            this.setByte(this.cell.i, this.cell.j, this.extra);
         },
         item() {
             this.getRows();
@@ -162,9 +163,10 @@ var ba = new Vue({
             if (i === null || j === null) {
                 return;
             }
+            this.extra = extra;
             if (extra) {
                 if (this.extraRows[i][j] !== '--') {
-                    this.address = `0x${(this.hexStart + i * 16 + j + 2032).toString(16).toUpperCase()}`
+                    var address = `0x${(this.hexStart + i * 16 + j + 2032).toString(16).toUpperCase()}`
                     var byte = i/3 * 8 + j + 520;
                     if (this.version === 'J') {
                         byte = (i - 1)/3 * 8 + j + 528;
@@ -172,7 +174,19 @@ var ba = new Vue({
                     if (this.endian === 'L') {
                         byte = this.toLittleEndian(byte);
                     }
-                    this.byte = byte;
+                    if (byte === this.byte && address === this.address) {
+                        this.cell = {i: null, j: null};
+                        this.byte = null;
+                        this.address = '';
+                    } else {
+                        this.cell = {i: i, j: j};
+                        this.address = address;
+                        this.byte = byte;
+                    }
+                } else {
+                    this.cell = {i: null, j: null};
+                    this.byte = null;
+                    this.address = '';
                 }
             } else if (this.rows[i][j] !== '--') {
                 var byte = i * 16 + j;
