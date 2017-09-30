@@ -34,13 +34,13 @@
     cursor: pointer;
 }
 #ba-table td.selected {
-    background-color: #f00 !important;
-    border-color: #f00 !important;
+    background-color: #ab00ff !important;
+    border-color: #ab00ff !important;
     color: #fff !important;
 }
 #ba-table td.byte:hover {
-    background-color: #fcc;
-    border-color: #fcc;
+    background-color: #eabeff;
+    border-color: #eabeff;
     color: #000;
 }
 #ba-table td.unreachable {
