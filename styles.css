@@ -1,5 +1,5 @@
 #ba {
-    background-color: #eaeaea;
+    background-color: #f5f5f5;
     font-family: monospace;
     display: none;
 }
@@ -62,12 +62,6 @@
     padding: 3px;
     border: none;
 }
-#ba-controls > div .ba-button:last-child {
-    margin-left: -1px;
-}
-#ba-controls > .bottom-row {
-    margin-top: -1px;
-}
 .ba-button {
     border: 1px solid #ccc;
     width: 100px;
@@ -75,8 +69,8 @@
     cursor: pointer;
 }
 .ba-button.selected {
-    background-color: #9df;
-    border-color: #939b9e;
+    background-color: #eabeff;
+    border-color: #ab00ff;
 }
 #ba-start {
     margin-top: 10px;
@@ -110,18 +104,32 @@
     vertical-align: bottom;
 }
 #ba-items td:not(.item-name):hover {
-    border-color: #00f;
+    border-color: #ab00ff;
 }
 #ba-items td.selected {
-    border-color: #00f;
-    background-color: #9df;
+    border-color: #ab00ff;
+    background-color: #eabeff;
 }
 #ba-info {
     margin-top: 10px;
+}
+#ba-address {
+    color: #ab00ff;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-bottom-color: #fff;
+    padding: 0 5px;
 }
 #ba-description {
     width: 400px;
     background-color: #fff;
     padding: 5px;
     border: 1px solid #ccc;
+}
+::selection {
+    background-color: #ab00ff;
+    color: #fff;
+}
+:focus {
+    outline-color: #ab00ff;
 }

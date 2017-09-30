@@ -62,8 +62,8 @@
                     </tr>
                 </table>
                 <div id="ba-info" v-show="address">
-                    <span>{{address}}</span>
-                    <div id="ba-description">{{description}}</div>
+                    <span id="ba-address">{{address}}</span>
+                    <div id="ba-description" v-html="description"></div>
                 </div>
             </div>
         </div>
