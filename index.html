@@ -51,12 +51,12 @@
                 <table id="ba-items">
                     <tr v-for="i in 8">
                         <td v-for="j in 6" :class="{selected: item === getIndex(i, j)}" @click="setItem(i, j)">
-                            <img :src="`icons/${getIndex(i, j)}.png`"></img>
+                            <div :style="{background: `url(spritesheet.png) ${(j - 1) * -32}px ${(i - 1) * -32}px`, width: '32px', height: '32px'}"></div>
                         </td>
                     </tr>
                     <tr>
                         <td :class="{selected: item === 'empty'}" @click="item = (item === 'empty' ? null : 'empty')">
-                            <img src="icons/empty.png"></img>
+                            <img src="empty.png">
                         </td>
                         <td colspan="5" class="item-name">{{item === 'empty' ? 'Empty C/Transformation B' : itemNames[item]}}</td>
                     </tr>
