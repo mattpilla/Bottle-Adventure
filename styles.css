@@ -10,6 +10,7 @@
 #ba-table {
     border-collapse: collapse;
     cursor: default;
+    font-size: 13px;
 }
 #ba-table td {
     border: 1px solid #ccc;
