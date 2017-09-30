@@ -119,3 +119,9 @@
 #ba-info {
     margin-top: 10px;
 }
+#ba-description {
+    width: 400px;
+    background-color: #fff;
+    padding: 5px;
+    border: 1px solid #ccc;
+}

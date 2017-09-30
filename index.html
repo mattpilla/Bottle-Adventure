@@ -61,12 +61,14 @@
                         <td colspan="5" class="item-name">{{item === 'empty' ? 'Empty C/Transformation B' : itemNames[item]}}</td>
                     </tr>
                 </table>
-                <div id="ba-info">
+                <div id="ba-info" v-show="address">
                     <span>{{address}}</span>
+                    <div id="ba-description">{{description}}</div>
                 </div>
             </div>
         </div>
-        <script src="vue.js"></script>
+        <script src="data.js"></script>
+        <script src="vue.min.js"></script>
         <script src="main.js"></script>
     </body>
 </html>
