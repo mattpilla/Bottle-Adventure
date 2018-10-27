@@ -1,11 +1,12 @@
 #ba {
     background-color: #f5f5f5;
     font-family: monospace;
-    display: none;
     position: relative;
+    display: none;
+    flex-wrap: wrap;
 }
-#ba-table, #ba-controls {
-    display: inline-table;
+#ba-controls {
+    padding: 0 8px;
 }
 #ba-table {
     border-collapse: collapse;
