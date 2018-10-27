@@ -1,0 +1,10 @@
+{
+    "name": "scripts",
+    "scripts": {
+        "start": "npm ci && node seed"
+    },
+    "version": "1.0.0",
+    "dependencies": {
+        "csvtojson": "^2.0.8"
+    }
+}
