@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="styles.css">
     <link href="favicon.ico" type="image/x-icon" rel="icon">
   </head>
-  <body class="light">
+  <body>
     <div id="ba" :style="'display: flex'"> <!-- prevent FOUC -->
       <div id="ba-table-container">
         <table id="ba-table" class="monospace">
@@ -41,17 +41,24 @@
         </table>
       </div>
       <div id="ba-controls">
-        <div>
-          <button v-for="(v, k) in versions" class="ba-button" :class="{selected: version === k}" @click="version = k">{{v}}</button>
-        </div>
-        <div class="bottom-row">
-          <button v-for="(v, k) in endians" class="ba-button" :class="{selected: endian === k}" @click="endian = k">{{v}}</button>
+        <div id="top-controls">
+          <div>
+            <div>
+              <button v-for="(v, k) in versions" class="ba-button" :class="{selected: version === k}" @click="version = k">{{v}}</button>
+            </div>
+            <div class="bottom-row">
+              <button v-for="(v, k) in endians" class="ba-button" :class="{selected: endian === k}" @click="endian = k">{{v}}</button>
+            </div>
+          </div>
+          <div id="sun-switch" title="Toggle Dark Mode" @click="dark = !dark">
+            <img :src="dark ? 'sun.png' : 'moon.png'">
+          </div>
         </div>
         <div id="ba-start">
           <span>Start: <span class="monospace">0x</span></span>
           <div id="ba-start-controls">
             <input id="ba-start-input" v-model="start" class="monospace">
-            <button id="ba-start-btn" @click="resetStart">Reset</button>
+            <button @click="resetStart">Reset</button>
           </div>
         </div>
         <div id="timestamp">Timestamp: <span class="monospace">0x<span class="timestamp">{{timestamp.join('')}}</span></span></div>
@@ -65,7 +72,7 @@
             <td :class="{selected: item === 'empty'}" @click="item = (item === 'empty' ? null : 'empty')">
               <img src="empty.png">
             </td>
-            <td colspan="5" class="item-name">{{item === 'empty' ? 'Empty C/Transformation B' : itemNames[item]}}</td>
+            <td colspan="5" class="item-name"><small>{{item === 'empty' ? 'Empty C/Transformation B' : itemNames[item]}}</small></td>
           </tr>
         </table>
         <div id="ba-info" v-show="address">

@@ -12,7 +12,5 @@ Request access to https://docs.google.com/spreadsheets/d/1YCOfw-yvR6xpUF8O5zEKxt
 I included a very simple script to update the data based on the contents of that doc, see the `scripts/` directory.
 
 ## TODO
-- The only necessary functionality missing is that `data.js` isn't populated with the documentation for what each byte is responsible for
-- The above bullet point should be supplemented with a more automated way for people to suggest edits; this documentation should see continuous updates as necessary
 - I'd like to add routing so that specific results can be linked to directly
 - Write documentation on how to use and benefit from this app

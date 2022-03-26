@@ -1,6 +1,7 @@
 var ba = new Vue({
     el: '#ba',
     data: {
+        dark: false,
         start: '',
         hexStart: 0x0,
         timestamp: ['01', '23', '45', '67', '89', 'ab', 'cd', 'ef'],
@@ -26,9 +27,14 @@ var ba = new Vue({
     },
     mounted() {
         this.resetStart();
-        this.getRows()
+        this.getRows();
+        this.getDarkModeValue();
+        this.darkMode();
     },
     watch: {
+        dark() {
+            this.darkMode();
+        },
         start() {
             this.hexStart = parseInt(this.start, 16);
             this.setByte(this.cell.i, this.cell.j, this.extra);
@@ -54,6 +60,20 @@ var ba = new Vue({
         }
     },
     methods: {
+        getDarkModeValue() {
+            const dark = localStorage.getItem('dark');
+            if (dark != null) {
+                return this.dark = dark == 'dark';
+            }
+            if (window.getComputedStyle(document.documentElement).getPropertyValue('content') == 'dark') {
+                this.dark = true;
+            }
+        },
+        darkMode() {
+            const darkValue = this.dark ? 'dark' : 'light'
+            document.body.classList = darkValue;
+            localStorage.setItem('dark', darkValue);
+        },
         resetStart() {
             var x = this.version + this.endian;
             switch (x) {
