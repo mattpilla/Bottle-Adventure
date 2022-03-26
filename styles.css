@@ -1,31 +1,61 @@
+@font-face {
+    font-family: 'Roboto';
+    src: url('Roboto-Regular.ttf');
+}
+@font-face {
+    font-family: 'RobotoMono';
+    src: url('RobotoMono-VariableFont_wght.ttf');
+}
 html,
 body {
     height: 100%;
 }
 body {
+    font-family: Roboto, sans-serif;
+    font-size: 1rem;
     background-color: var(--body-bg-color);
-    max-width: 900px;
+    max-width: var(--max-width);
     margin: auto;
 }
+.monospace {
+    font-family: RobotoMono, monospace;
+    font-size: 1rem;
+}
 #ba {
-    min-height: 100%;
+    align-items: flex-start;
+    height: 100%;
     background-color: var(--ba-bg-color);
-    font-family: Consolas, monospace;
-    font-size: 13px;
     position: relative;
     display: none;
 }
 #ba-controls {
+    align-self: stretch;
     padding: 0 8px;
     display: flex;
     flex-direction: column;
     width: 100%;
 }
+#ba-table-container {
+    max-height: 100vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    flex: 0 0 auto;
+}
 #ba-table {
     user-select: none;
     border-collapse: collapse;
     cursor: default;
-    font-size: 13px;
+}
+#ba-table thead {
+    position: sticky;
+    top: 0;
+}
+#ba-table th {
+    background-color: var(--text-bg-color);
+    padding: 2px 4px;
+    text-transform: uppercase;
+    font-weight: normal;
+    outline: 1px solid var(--border-color);
 }
 #ba-table td {
     border: 1px solid var(--border-color);
@@ -65,11 +95,6 @@ body {
     border-color: var(--disabled-border-color);
     color: var(--disabled-color);
 }
-#ba-table tbody tr:first-child td {
-    background-color: var(--text-bg-color);
-    border-top: none;
-    border-bottom: 1px solid var(--text-color);
-}
 #ba-table tbody tr td:first-child:not(.separator) {
     border-left: none;
     background-color: var(--text-bg-color);
@@ -92,15 +117,16 @@ body {
 #ba-start {
     margin-top: 10px;
 }
-#ba-start > input {
+#ba-start-controls {
+    display: inline-flex;
+}
+#ba-start-input {
     width: 75px;
     border: 1px solid var(--button-border-color);
     border-right: none;
     text-transform: uppercase;
-    font-family: Consolas, monospace;
-    font-size: 13px;
 }
-#ba-start > button {
+#ba-start-btn {
     border: 1px solid var(--button-border-color);
     background-color: var(--button-bg-color);
     cursor: pointer;
@@ -108,7 +134,7 @@ body {
 #timestamp {
     margin: 5px 0 10px 0;
 }
-#timestamp > span {
+.timestamp {
     text-transform: uppercase;
 }
 #ba-items {

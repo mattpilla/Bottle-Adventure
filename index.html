@@ -1,77 +1,85 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Bottle Adventure Documentation</title>
-        <meta name="description" content="Bottle Adventure Documentation (BAD)">
-        <meta name="og:description" content="Bottle Adventure Documentation (BAD)">
-        <meta property="og:image" content="preview.png">
-        <meta property="og:image:type" content="image/png">
-        <meta property="og:image:width" content="32">
-        <meta property="og:image:height" content="32">
-        <meta name="theme-color" content="#ab00ff">
-        <link rel="stylesheet" href="variables.css">
-        <link rel="stylesheet" href="styles.css">
-        <link href="favicon.ico" type="image/x-icon" rel="icon">
-    </head>
-    <body class="light">
-        <div id="ba" :style="'display: flex'"> <!-- prevent FOUC -->
-            <table id="ba-table">
-                <tbody>
-                    <tr>
-                        <td></td>
-                        <td v-for="i in 16">&nbsp;{{(i - 1).toString(16)}}</td>
-                    </tr>
-                    <tr v-for="(row, i) in rows">
-                        <td>{{(i * 16 + hexStart).toString(16)}}</td>
-                        <td v-for="(col, j) in row" :class="{hit: col !== 'ff' && col !== '--', lone: col === '01', time: col.endsWith('x'), zero: col === '00', unreachable: col === '--', byte: col !== '--', selected: !extra && i === cell.i && j === cell.j}" @click="setByte(i, j)">{{col.substr(0,2)}}</td>
-                    </tr>
-                    <tr>
-                        <td colspan="17" class="separator"></td>
-                    </tr>
-                    <tr v-for="(row, i) in extraRows">
-                        <td>{{(i * 16 + hexStart + 2032).toString(16)}}</td>
-                        <td v-for="(col, j) in row" :class="{hit: col !== 'ff' && col !== '--', lone: col === '01', time: col.endsWith('x'), zero: col === '00', unreachable: col === '--', byte: col !== '--', selected: extra && i === cell.i && j === cell.j}" @click="setByte(i, j, true)">{{col.substr(0,2)}}</td>
-                    </tr>
-                </tbody>
-            </table>
-            <div id="ba-controls">
-                <div>
-                    <button v-for="(v, k) in versions" class="ba-button" :class="{selected: version === k}" @click="version = k">{{v}}</button>
-                </div>
-                <div class="bottom-row">
-                    <button v-for="(v, k) in endians" class="ba-button" :class="{selected: endian === k}" @click="endian = k">{{v}}</button>
-                </div>
-                <div id="ba-start">
-                    <span>Start: 0x</span><input v-model="start"><button @click="resetStart">Reset</button>
-                </div>
-                <div id="timestamp">Timestamp: 0x<span>{{timestamp.join('')}}</span></div>
-                <table id="ba-items">
-                    <tr v-for="i in 8">
-                        <td v-for="j in 6" :class="{selected: item === getIndex(i, j)}" @click="setItem(i, j)">
-                            <div :style="{background: `url(spritesheet.png) ${(j - 1) * -32}px ${(i - 1) * -32}px`, width: '32px', height: '32px'}"></div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td :class="{selected: item === 'empty'}" @click="item = (item === 'empty' ? null : 'empty')">
-                            <img src="empty.png">
-                        </td>
-                        <td colspan="5" class="item-name">{{item === 'empty' ? 'Empty C/Transformation B' : itemNames[item]}}</td>
-                    </tr>
-                </table>
-                <div id="ba-info" v-show="address">
-                    <span id="ba-address">{{address}}</span>
-                    <div id="ba-description" v-html="description"></div>
-                </div>
-                <small id="credit">
-                    Bottle Adventure Documentation page by <a href="https://twitter.com/kaztalek" target="_blank" rel="noopener">@Kaztalek</a><br>
-                    Information written by <a href="https://twitter.com/exodus_122" target="_blank" rel="noopener">@exodus_122</a><br>
-                </small>
-            </div>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bottle Adventure Documentation</title>
+    <meta name="description" content="Bottle Adventure Documentation (BAD)">
+    <meta name="og:description" content="Bottle Adventure Documentation (BAD)">
+    <meta property="og:image" content="preview.png">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="32">
+    <meta property="og:image:height" content="32">
+    <meta name="theme-color" content="#ab00ff">
+    <link rel="stylesheet" href="variables.css">
+    <link rel="stylesheet" href="styles.css">
+    <link href="favicon.ico" type="image/x-icon" rel="icon">
+  </head>
+  <body class="light">
+    <div id="ba" :style="'display: flex'"> <!-- prevent FOUC -->
+      <div id="ba-table-container">
+        <table id="ba-table" class="monospace">
+          <thead>
+            <tr>
+              <th></th>
+              <th v-for="i in 16">&nbsp;{{(i - 1).toString(16)}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(row, i) in rows">
+              <td>{{(i * 16 + hexStart).toString(16)}}</td>
+              <td v-for="(col, j) in row" :class="{hit: col !== 'ff' && col !== '--', lone: col === '01', time: col.endsWith('x'), zero: col === '00', unreachable: col === '--', byte: col !== '--', selected: !extra && i === cell.i && j === cell.j}" @click="setByte(i, j)">{{col.substr(0,2)}}</td>
+            </tr>
+            <tr>
+              <td colspan="17" class="separator"></td>
+            </tr>
+            <tr v-for="(row, i) in extraRows">
+              <td>{{(i * 16 + hexStart + 2032).toString(16)}}</td>
+              <td v-for="(col, j) in row" :class="{hit: col !== 'ff' && col !== '--', lone: col === '01', time: col.endsWith('x'), zero: col === '00', unreachable: col === '--', byte: col !== '--', selected: extra && i === cell.i && j === cell.j}" @click="setByte(i, j, true)">{{col.substr(0,2)}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div id="ba-controls">
+        <div>
+          <button v-for="(v, k) in versions" class="ba-button" :class="{selected: version === k}" @click="version = k">{{v}}</button>
         </div>
-        <script src="data.js"></script>
-        <script src="vue.min.js"></script>
-        <script src="main.js"></script>
-    </body>
+        <div class="bottom-row">
+          <button v-for="(v, k) in endians" class="ba-button" :class="{selected: endian === k}" @click="endian = k">{{v}}</button>
+        </div>
+        <div id="ba-start">
+          <span>Start: <span class="monospace">0x</span></span>
+          <div id="ba-start-controls">
+            <input id="ba-start-input" v-model="start" class="monospace">
+            <button id="ba-start-btn" @click="resetStart">Reset</button>
+          </div>
+        </div>
+        <div id="timestamp">Timestamp: <span class="monospace">0x<span class="timestamp">{{timestamp.join('')}}</span></span></div>
+        <table id="ba-items">
+          <tr v-for="i in 8">
+            <td v-for="j in 6" :class="{selected: item === getIndex(i, j)}" @click="setItem(i, j)">
+              <div :style="{background: `url(spritesheet.png) ${(j - 1) * -32}px ${(i - 1) * -32}px`, width: '32px', height: '32px'}"></div>
+            </td>
+          </tr>
+          <tr>
+            <td :class="{selected: item === 'empty'}" @click="item = (item === 'empty' ? null : 'empty')">
+              <img src="empty.png">
+            </td>
+            <td colspan="5" class="item-name">{{item === 'empty' ? 'Empty C/Transformation B' : itemNames[item]}}</td>
+          </tr>
+        </table>
+        <div id="ba-info" v-show="address">
+          <span id="ba-address">{{address}}</span>
+          <div id="ba-description" v-html="description"></div>
+        </div>
+        <small id="credit">
+          Bottle Adventure Documentation page by <a href="https://twitter.com/kaztalek" target="_blank" rel="noopener">@Kaztalek</a><br>
+          Information written by <a href="https://twitter.com/exodus_122" target="_blank" rel="noopener">@exodus_122</a><br>
+        </small>
+      </div>
+    </div>
+    <script src="data.js"></script>
+    <script src="vue.min.js"></script>
+    <script src="main.js"></script>
+  </body>
 </html>

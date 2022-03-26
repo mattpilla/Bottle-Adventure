@@ -1,3 +1,6 @@
+:root {
+    --max-width: 900px;
+}
 .light {
     --body-bg-color: #d8d4dc;
     --ba-bg-color: #f5f5f5;
